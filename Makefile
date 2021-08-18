@@ -4,20 +4,39 @@
 
 ### GCP Project - - - - - - - - - - - - - - - - - - - - - -
 
-# not required here
+PROJECT_ID=lively-aloe-318909
+
+set_project:
+		@gcloud config set project ${PROJECT_ID}
 
 ### GCP Storage - - - - - - - - - - - - - - - - - - - - - -
 
-BUCKET_NAME=XXX
+BUCKET_NAME=wagon-data-655-sustrac
+
+create_bucket:
+		@gsutil mb -l ${REGION} -p ${PROJECT_ID} gs://${BUCKET_NAME}
 
 ##### Data  - - - - - - - - - - - - - - - - - - - - - - - -
 
-# not required here
+# path to the file to upload to GCP (the path to the file should be absolute or should match the directory where the make command is ran)
+# replace with your local path to the `train_1k.csv` and make sure to put the path between quotes
+LOCAL_PATH=/Users/q/code/QSTC/TaxiFareModel/raw_data/train_1k.csv
+
+# bucket directory in which to store the uploaded file (`data` is an arbitrary name that we choose to use)
+BUCKET_FOLDER=data
+
+# name for the uploaded file inside of the bucket (we choose not to rename the file that we upload)
+BUCKET_FILE_NAME=$(shell basename ${LOCAL_PATH})
+
+upload_data:
+		@gsutil cp train_1k.csv gs://${BUCKET_NAME}/data/train_1k.csv
+		@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
+
 
 ##### Training  - - - - - - - - - - - - - - - - - - - - - -
 
 # will store the packages uploaded to GCP for the training
-BUCKET_TRAINING_FOLDER = 'trainings'
+BUCKET_TRAINING_FOLDER = trainings
 
 ##### Model - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -14,8 +14,7 @@ import joblib
 
 ### GCP Storage - - - - - - - - - - - - - - - - - - - - - -
 
-BUCKET_NAME = 'XXX'
-
+BUCKET_NAME = 'wagon-data-655-sustrac'
 ##### Data  - - - - - - - - - - - - - - - - - - - - - - - -
 
 # train data file location
