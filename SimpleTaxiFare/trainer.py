@@ -84,7 +84,6 @@ STORAGE_LOCATION = 'models/simpletaxifare/model.joblib'
 
 def upload_model_to_gcp():
 
-
     client = storage.Client()
 
     bucket = client.bucket(BUCKET_NAME)
